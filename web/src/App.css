@@ -8,6 +8,10 @@
   --warning: #ffc107;
 }
 
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .container {
   padding: 40px;
   background-color: var(--bg);
