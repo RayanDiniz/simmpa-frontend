@@ -1,5 +1,5 @@
 /* App.css - SIMMPA Dashboard */
-
+@import "tailwindcss";
 :root {
   --primary-blue: #004a99; /* Azul CAEMA/Governo */
   --bg-gray: #f4f7f6;
