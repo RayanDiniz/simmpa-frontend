@@ -1,54 +1,85 @@
 import React, { useEffect, useState } from 'react';
 import api from './api';
+import './App.css'; 
+// Importamos os ícones para manter o visual profissional
 import { LayoutDashboard, Tool, AlertTriangle, CheckCircle } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 function App() {
   const [assets, setAssets] = useState([]);
 
   useEffect(() => {
-    api.get('/assets').then(res => setAssets(res.data));
+    // Busca os dados do teu backend no Render
+    api.get('/assets')
+      .then(res => setAssets(res.data))
+      .catch(err => console.error("Erro ao procurar ativos:", err));
   }, []);
 
   const stats = {
     total: assets.length,
     critical: assets.filter(a => a.status === 'Vermelho').length,
+    warning: assets.filter(a => a.status === 'Amarelo').length,
     ok: assets.filter(a => a.status === 'Verde').length,
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <header className="mb-8 border-b pb-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-blue-800">SIMMPA | Gestão Patrimonial CAEMA</h1>
-        <div className="bg-blue-100 p-2 rounded text-blue-800 font-bold">Vinhais - Unidade Operacional</div>
+    <div className="container">
+      <header className="main-header">
+        <div className="header-content">
+          <h1>SIMMPA | Gestão Patrimonial CAEMA</h1>
+          <div className="unit-badge">Unidade Operacional</div>
+        </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card icon={<LayoutDashboard/>} label="Total Ativos" value={stats.total} color="blue" />
-        <Card icon={<AlertTriangle/>} label="Críticos (Vermelho)" value={stats.critical} color="red" />
-        <Card icon={<CheckCircle/>} label="Conformes" value={stats.ok} color="green" />
+      <div className="dashboard-grid">
+        <div className="card blue">
+          <div className="card-icon"><LayoutDashboard size={32} /></div>
+          <div>
+            <p className="card-label">Total Ativos</p>
+            <p className="card-value">{stats.total}</p>
+          </div>
+        </div>
+
+        <div className="card red">
+          <div className="card-icon"><AlertTriangle size={32} /></div>
+          <div>
+            <p className="card-label">Críticos</p>
+            <p className="card-value">{stats.critical}</p>
+          </div>
+        </div>
+
+        <div className="card green">
+          <div className="card-icon"><CheckCircle size={32} /></div>
+          <div>
+            <p className="card-label">Conformes</p>
+            <p className="card-value">{stats.ok}</p>
+          </div>
+        </div>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-lg font-bold mb-4">Lista de Ativos e Status</h2>
-        <table className="w-full text-left border-collapse">
+      <div className="table-container">
+        <h2 className="table-title">Monitoramento de Ativos em Tempo Real</h2>
+        <table className="simmpa-table">
           <thead>
-            <tr className="bg-gray-50">
-              <th className="p-3 border-b">Ativo</th>
-              <th className="p-3 border-b">Categoria</th>
-              <th className="p-3 border-b">Status</th>
+            <tr>
+              <th>ID</th>
+              <th>Nome do Ativo</th>
+              <th>Categoria</th>
+              <th>Status</th>
+              <th>Última Manutenção</th>
             </tr>
           </thead>
           <tbody>
             {assets.map(asset => (
               <tr key={asset.id}>
-                <td className="p-3 border-b">{asset.name}</td>
-                <td className="p-3 border-b">{asset.category}</td>
-                <td className="p-3 border-b">
-                  <span className={`px-2 py-1 rounded text-white text-xs ${asset.status === 'Verde' ? 'bg-green-500' : asset.status === 'Vermelho' ? 'bg-red-500' : 'bg-yellow-500'}`}>
+                <td>#{asset.id}</td>
+                <td className="font-bold">{asset.name}</td>
+                <td>{asset.category}</td>
+                <td>
+                  <span className={`badge bg-${asset.status === 'Verde' ? 'green' : asset.status === 'Vermelho' ? 'red' : 'yellow'}`}>
                     {asset.status}
                   </span>
                 </td>
+                <td>{asset.last_maintenance ? new Date(asset.last_maintenance).toLocaleDateString() : 'Pendente'}</td>
               </tr>
             ))}
           </tbody>
@@ -57,15 +88,5 @@ function App() {
     </div>
   );
 }
-
-const Card = ({ icon, label, value, color }) => (
-  <div className={`bg-white p-6 rounded-lg shadow border-l-4 border-${color}-500 flex items-center`}>
-    <div className={`mr-4 text-${color}-500`}>{icon}</div>
-    <div>
-      <p className="text-gray-500 text-sm uppercase font-bold">{label}</p>
-      <p className="text-2xl font-black">{value}</p>
-    </div>
-  </div>
-);
 
 export default App;

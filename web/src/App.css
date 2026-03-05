@@ -1,147 +1,99 @@
-/* App.css - SIMMPA Dashboard */
-@import "tailwindcss";
+/* App.css */
 :root {
-  --primary-blue: #004a99; /* Azul CAEMA/Governo */
-  --bg-gray: #f4f7f6;
+  --primary: #004a99;
+  --bg: #f0f2f5;
+  --white: #ffffff;
+  --danger: #dc3545;
   --success: #28a745;
   --warning: #ffc107;
-  --danger: #dc3545;
-  --text-dark: #333;
 }
 
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--bg-gray);
-  color: var(--text-dark);
-}
-
-.min-h-screen {
+.container {
+  padding: 40px;
+  background-color: var(--bg);
   min-height: 100vh;
 }
 
-.p-8 {
-  padding: 2rem;
+.main-header {
+  margin-bottom: 30px;
+  border-bottom: 3px solid var(--primary);
+  padding-bottom: 15px;
 }
 
-/* Header */
-header {
+.header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #ddd;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-}
-
-header h1 {
-  color: var(--primary-blue);
-  margin: 0;
-  font-size: 1.5rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .unit-badge {
-  background-color: #e1effe;
-  color: var(--primary-blue);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  background: var(--primary);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
   font-weight: bold;
 }
 
-/* Dashboard Grid */
-.grid {
+.dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
 }
 
-/* KPI Cards */
 .card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  background: var(--white);
+  padding: 20px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
-  border-left: 5px solid #ccc;
-  transition: transform 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.card:hover {
-  transform: translateY(-5px);
-}
+.card.blue { border-top: 5px solid var(--primary); }
+.card.red { border-top: 5px solid var(--danger); }
+.card.green { border-top: 5px solid var(--success); }
 
-.card.blue { border-left-color: var(--primary-blue); }
-.card.green { border-left-color: var(--success); }
-.card.red { border-left-color: var(--danger); }
-.card.yellow { border-left-color: var(--warning); }
+.card-icon { margin-right: 20px; color: #666; }
+.card-label { font-size: 14px; color: #888; margin: 0; text-transform: uppercase; }
+.card-value { font-size: 28px; font-weight: bold; margin: 0; color: #333; }
 
-.card-icon {
-  margin-right: 1rem;
-  opacity: 0.7;
-}
-
-.card-label {
-  font-size: 0.8rem;
-  color: #777;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.card-value {
-  font-size: 1.8rem;
-  font-weight: 800;
-  margin: 0;
-}
-
-/* Tabela de Ativos */
 .table-container {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  overflow-x: auto;
+  background: var(--white);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-table {
+.table-title { margin-bottom: 20px; color: var(--primary); }
+
+.simmpa-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
 }
 
-th {
-  background-color: #f8f9fa;
-  padding: 12px;
+.simmpa-table th {
   text-align: left;
-  border-bottom: 2px solid #eee;
-  color: #555;
+  padding: 15px;
+  background: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
 }
 
-td {
-  padding: 12px;
+.simmpa-table td {
+  padding: 15px;
   border-bottom: 1px solid #eee;
 }
 
-/* Badges de Status (Semáforo) */
 .badge {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: bold;
+  padding: 5px 12px;
+  border-radius: 15px;
   color: white;
-  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
 }
 
-.bg-green-500 { background-color: var(--success); }
-.bg-red-500 { background-color: var(--danger); }
-.bg-yellow-500 { background-color: var(--warning); color: #333; }
-.bg-grey-500 { background-color: #9e9e9e; }
+.bg-green { background-color: var(--success); }
+.bg-red { background-color: var(--danger); }
+.bg-yellow { background-color: var(--warning); color: black; }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .p-8 { padding: 1rem; }
-  header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-}
+.font-bold { font-weight: bold; }
